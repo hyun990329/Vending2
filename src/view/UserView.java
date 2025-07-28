@@ -1,5 +1,7 @@
 package view;
 
+import dto.Member;
+import service.CardService;
 import service.UserService;
 
 import java.util.Scanner;
@@ -8,6 +10,7 @@ public class UserView {
 
     private Scanner sc = new Scanner(System.in);
     UserService userService = new UserService();
+    CardService cardService = new CardService();
 
     public void userScreen() {
 
@@ -18,8 +21,10 @@ public class UserView {
             switch (num) {
                 case 1:
                     // 로그인
-                    userService.login();
-                    afterLogin();
+                    int loginResult = userService.login();
+                    if (loginResult == 1) {
+                        afterLogin();
+                    }
                     break;
                 case 2:
                     // 회원가입
@@ -50,6 +55,7 @@ public class UserView {
                     break;
                 case 3:
                     // 잔액 조회
+                    cardService.viewBalance(userService.getMember().getMemberId());
                     break;
                 case 4:
                     return;
